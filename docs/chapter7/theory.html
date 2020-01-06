@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>运行时刻环境 - 龙书笔记</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../chapter2/theory.html"><strong aria-hidden="true">1.</strong> 一个简单的语法制导翻译器</a></li><li><ol class="section"><li><a href="../chapter2/answer.html"><strong aria-hidden="true">1.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter3/theory.html"><strong aria-hidden="true">2.</strong> 词法分析</a></li><li><ol class="section"><li><a href="../chapter3/answer.html"><strong aria-hidden="true">2.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter4/theory.html"><strong aria-hidden="true">3.</strong> 语法分析</a></li><li><ol class="section"><li><a href="../chapter4/answer.html"><strong aria-hidden="true">3.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter5/theory.html"><strong aria-hidden="true">4.</strong> 语法制导的翻译</a></li><li><ol class="section"><li><a href="../chapter5/answer.html"><strong aria-hidden="true">4.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter6/theory.html"><strong aria-hidden="true">5.</strong> 中间代码生成</a></li><li><ol class="section"><li><a href="../chapter6/answer.html"><strong aria-hidden="true">5.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter7/theory.html" class="active"><strong aria-hidden="true">6.</strong> 运行时刻环境</a></li><li><ol class="section"><li><a href="../chapter7/answer.html"><strong aria-hidden="true">6.1.</strong> 习题答案</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">龙书笔记</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#运行时刻环境" id="运行时刻环境"><h1>运行时刻环境</h1></a>
+<p>数据对象的存储布局受目标机的寻址约束的影响很大。 在很多机器上， 执行整数加法的指令可能要求整数是对齐的， 也就是说这些数必须被放在一个能够被4整除的地址上。比如一个10个字符的数组，但是编译器可能为了对齐而给它分配12个字节， 其中的两个字节未使用， 因为对齐的原因而产生的闲置时间称为<strong>补白</strong>。</p>
+<p>静态存储:  编译器只需要观察程序文本即可做出某个存储分配决定， 而不需要观察该程序在运行时做出了什么， 我们就认为这个存储分配决定时静态的。
+动态存储:  只有在程序运行时才能做出决定， 那么这个决定就是动态的。</p>
+<p>很多编译器使用下列两种策略的某种组合进行动态存储分配:</p>
+<ul>
+<li>栈式存储。 一个过程的局部名字在栈中分配空间。</li>
+<li>堆式存储。 有些数据的生命周期要比创造它的某次过程调用更长， 这些数据通常被分配在一个可复用存储的&quot;堆&quot;中。</li>
+</ul>
+<p><strong>活动树:</strong> 用一棵树来表示在整个程序运行期间的所有过程活动</p>
+<p>活动树和程序行为之间存在下列多种有用的对应关系， 正是因为这些关系使我们可以使用运行时刻栈：</p>
+<p>1） 过程调用的序列和活动树的前序遍历相对应
+2） 过程返回的序列和活动树的后续遍历相对应</p>
+<a class="header" href="#调用代码序列" id="调用代码序列"><h2>调用代码序列</h2></a>
+<p>实现过程调用的代码称为调用代码序列. 这个代码序列为一个活动记录在栈中分配空间， 并在此记录的字段中填写信息， 返回代码序列是一段类似的代码， 它恢复机器状态， 使得调用过程能够在调用结束之后继续执行。</p>
+<a class="header" href="#访问链" id="访问链"><h2>访问链</h2></a>
+<p>针对嵌套函数的通常的静态作用域规则的一个直接实现方法是在每个活动记录中增加一个被称为访问链的指针。</p>
+<a class="header" href="#存储管理器" id="存储管理器"><h2>存储管理器</h2></a>
+<p>现代计算器都以存储层次结构的方式安排它们的存储， 如图所示
+<img src="./images/1.png" alt="1.png" />
+较小较快的元素&quot;更加接近&quot;处理器， 较大较慢的元素则离存储器比较远, 在一次内存访问中， 机器首先在最近的存储中寻找数据， 如果数据不在哪里则到上一层中寻找， 以此类推。</p>
+<ol>
+<li>数据以连续块的方式进行传输。 为了分摊访问的开销， 内存层次结构中较慢的层次通常使用较大的块， 在主存和高速缓存之间的数据是按照被称为高速缓存线的块进行传输。 在虚拟内存(磁盘)和主内存之间的数据是以被称为&quot;页&quot;的内存块进行传输的， 页的大小通常在4 - 64kb之间。</li>
+</ol>
+<p>应对存储管理的规范：</p>
+<ol>
+<li>当对象的生命周期能够被静态推导出来时候， 可以使用<em>对象所有者</em>的概念, 所有者是指向这个对象的一个指针， 所有者负责删除这个对象或者把这个对象传递给另一个所有者.</li>
+<li>当对象的生命周期需要动态确定时候， 引用计数会有所帮助, 它的基本思想是给每个动态分配的对象附上一个计数， 在指向这个对象的引用或被创建时， 我们将此对象的引用计数加一， 当一个引用被删除时， 我们将此引用计数减一。 当计数变成0时， 这个对象就不会再被引用， 因此可以被删除.</li>
+<li>对于其生命周期局限于计算过程中的某个特定阶段的一组对象， 可以使用基于区域的分配方法， 也就是内存池。</li>
+</ol>
+<a class="header" href="#引用计数垃圾回收器" id="引用计数垃圾回收器"><h3>引用计数垃圾回收器</h3></a>
+<p>引用计数可以按照下面的方法进行维护:</p>
+<ol>
+<li>对象分配。 新对象的引用计数被设置为1</li>
+<li>参数传递。 被传递给一个过程的每个对象的引用计数加一.</li>
+<li>引用赋值。 如果u和v都是引用， 对于语句u = v， v指向的对象的引用计数加一， u本来指向的原对象的引用计数减一</li>
+<li>过程返回。 当一个过程退出时， 该过程记录的局部变量所指向的对象的引用必须减一。</li>
+<li>可达性的传递丢失， 当一个对象的引用计数变成0时， 我们必须将该对象中的各个引用所指向的每个对象的引用计数减1。</li>
+</ol>
+<p>引用计数的缺点：</p>
+<ol>
+<li>它不能回收不可达的循环数据结构， 并且它的开销较大。</li>
+</ol>
+<p>优势：</p>
+<ol>
+<li>在于垃圾回收是以增量方式完成的。</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapter6/answer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapter7/answer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapter6/answer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapter7/answer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

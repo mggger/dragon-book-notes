@@ -1,0 +1,1079 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>龙书笔记</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="chapter2/theory.html"><strong aria-hidden="true">1.</strong> 一个简单的语法制导翻译器</a></li><li><ol class="section"><li><a href="chapter2/answer.html"><strong aria-hidden="true">1.1.</strong> 习题答案</a></li></ol></li><li><a href="chapter3/theory.html"><strong aria-hidden="true">2.</strong> 词法分析</a></li><li><ol class="section"><li><a href="chapter3/answer.html"><strong aria-hidden="true">2.1.</strong> 习题答案</a></li></ol></li><li><a href="chapter4/theory.html"><strong aria-hidden="true">3.</strong> 语法分析</a></li><li><ol class="section"><li><a href="chapter4/answer.html"><strong aria-hidden="true">3.1.</strong> 习题答案</a></li></ol></li><li><a href="chapter5/theory.html"><strong aria-hidden="true">4.</strong> 语法制导的翻译</a></li><li><ol class="section"><li><a href="chapter5/answer.html"><strong aria-hidden="true">4.1.</strong> 习题答案</a></li></ol></li><li><a href="chapter6/theory.html"><strong aria-hidden="true">5.</strong> 中间代码生成</a></li><li><ol class="section"><li><a href="chapter6/answer.html"><strong aria-hidden="true">5.1.</strong> 习题答案</a></li></ol></li><li><a href="chapter7/theory.html"><strong aria-hidden="true">6.</strong> 运行时刻环境</a></li><li><ol class="section"><li><a href="chapter7/answer.html"><strong aria-hidden="true">6.1.</strong> 习题答案</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">龙书笔记</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#一个简单的语法制导翻译器" id="一个简单的语法制导翻译器"><h1>一个简单的语法制导翻译器</h1></a>
+<p>一些概念:</p>
+<p><strong>文法:</strong> 用于描述程序设计语言语法的表示方法, 或称为上下文无关文法。 文法用于组织编译器前端.</p>
+<p>比如java中的IF-else语句, 通常具有以下形式</p>
+<pre><code>if (expr) statment else statment 
+
+可以用变量expr表示表达式， 变量stmt表示语句
+
+stmt -&gt; if (expr) stmt else stmt
+</code></pre>
+<p>像关键字<code>if</code> 这样的词法元素称为 <code>终结符号</code>。 像 <code>expr</code> 和<code>stmt</code>这样的变量表示终结符号的序列， 可以称为<code>非终结符号</code>.</p>
+<p><strong>文法由下面4个元素组成:</strong></p>
+<ul>
+<li>一个终结符号集合， 有时候被称为&quot;词法单元&quot;</li>
+<li>一个非终结符号的集合， 它们有时被称为&quot;语法变量&quot;</li>
+<li>一个产生式集合</li>
+<li>指定一个非终结符号为开始符号</li>
+</ul>
+<hr />
+<p>推导:  根据文法推到符号串时候， 首先从开始符号出发， 不断将某个非终结符号替换为该非终结符号的某个产生式的体。 可以从开始符号推到得到的所有终结符号串的集合为该文法定义的语言。</p>
+<a class="header" href="#树的遍历" id="树的遍历"><h2>树的遍历</h2></a>
+<p><strong>深度遍历:</strong> 尽可能地访问一个结点的尚未被访问的子结点.</p>
+<pre><code>procedure visit(node N) {
+    for (从左到右遍历N的每个子结点C) {
+        visit(C);
+    }
+
+    xxx
+}
+</code></pre>
+<p><strong>前序遍历:</strong> 遍历一棵树， 如果动作在第一次访问一个结点时被执行
+<strong>后序遍历:</strong> 遍历一棵树， 如果动作在最后离开节点前执行.</p>
+<a class="header" href="#递归下降语法" id="递归下降语法"><h2>递归下降语法</h2></a>
+<p>递归下降分析方法是一种自顶向下的语法分析方法, 它使用一组递归过程来处理输入。</p>
+<p>递归下降语法分析器有可能进入无限循环， 当出现一些产生式时， 分析器会出现无限循环. 比如<code>expr -&gt; expr + term</code></p>
+<p>左递归: 产生式 <code>A -&gt; Aa</code> 的右部最左符号是A自身， 非终结符号A和它的产生式称为左递归的.</p>
+<p>右递归: 产生式 <code>R -&gt; aR</code> 的右部最右符合是R本身， 非终结符号R和它的产生式称为右递归的.</p>
+<a class="header" href="#尾递归" id="尾递归"><h2>尾递归</h2></a>
+<p>如果一个过程体执行的最后一条语句是对该过程的递归调用， 那么这个调用就是称为是尾递归的.</p>
+<a class="header" href="#三地址码" id="三地址码"><h2>三地址码</h2></a>
+<p>一旦抽象语法树构造完成， 我们就可以计算树中各结点的属性值并执行各节点中的代码片段， 进行进一步的分析和综合。</p>
+<a class="header" href="#221" id="221"><h2>2.2.1</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>    s -&gt; s s *
+        -&gt; s a *
+         -&gt; aa + a*
+</code></pre>
+<ol start="2">
+<li>graphviz 节点名不能重复, sad</li>
+</ol>
+<p><img src="./dots/2_2_1.png" alt="1.png" /></p>
+<ol start="3">
+<li>只支持自身 <code>+</code> <code>*</code> 运算的语言</li>
+</ol>
+<a class="header" href="#222" id="222"><h2>2.2.2</h2></a>
+<ol>
+<li><code>0 1 0 1..... (0 1)序列必须出现一次</code></li>
+<li><code>a + a | a - a | ...</code></li>
+</ol>
+<a class="header" href="#224" id="224"><h2>2.2.4</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>expr -&gt;  expr expr op | digit
+digit -&gt; [0 - 9]*
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>list -&gt; list , id | id 
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code>list -&gt; id, list | id
+</code></pre>
+<ol start="4">
+<li></li>
+</ol>
+<pre><code>expr -&gt;  expr + term | expr - term | term 
+term -&gt; term * unary | term / unary | unary 
+
+unary -&gt; + factor | - factor | factor
+
+factor -&gt; id | num | (expr)
+</code></pre>
+<a class="header" href="#225" id="225"><h2>2.2.5</h2></a>
+<ol>
+<li>$$S_{n} = 2^{n} * 3  |  2^{n} * 9 | 2^{(n + 1)}  * 3 | 2 ^ {n} * 15 $$</li>
+<li>常数都是3的倍数， 所以能够被3整除</li>
+</ol>
+<a class="header" href="#226" id="226"><h2>2.2.6</h2></a>
+<ol>
+<li>罗马数字编码为阿拉伯数字</li>
+</ol>
+<pre><code>I -&gt; 1
+X -&gt; 10
+C -&gt; 100 
+M -&gt; 1000
+V -&gt; 5 
+L -&gt; 50 
+D -&gt; 500 
+</code></pre>
+<ol start="2">
+<li>
+<p>理解文法</p>
+<ol>
+<li>相同的数字连写， 所表示这些数字相加得到的数, <code>II = 2</code></li>
+<li>小的数字在大的数字右边， 所表示的数等于数字相加得到的数 <code>VI = 6</code></li>
+<li>小的数字在大的数字左边， 所表示的数等于大数减小数得到的数， <code>IV = 4</code></li>
+</ol>
+</li>
+<li>
+<p>文法</p>
+<ol>
+<li>smallDigit -&gt; I | II | III | ε</li>
+<li>digit -&gt; smallDigit | I V | V smallDigit | I X</li>
+<li>smallTen -&gt; X | XX | XXX</li>
+<li>ten -&gt; smallTen | X L  | L smallTen | X C</li>
+<li>smallHundred -&gt; C | CC | CCC</li>
+<li>hundred -&gt; smallHundred | C D | D smallHundred | C M</li>
+<li>thousand -&gt; M | MM | MMM | ε</li>
+<li>romanNum -&gt; thousand hundred ten digit</li>
+</ol>
+</li>
+</ol>
+<a class="header" href="#231" id="231"><h2>2.3.1</h2></a>
+<pre><code>expr -&gt; {print(&quot;+&quot;)} expr + term
+      | {print(&quot;-&quot;)} expr - term
+      | term 
+
+term -&gt; print(&quot;*&quot;)  term * factor
+      | print(&quot;/&quot;)  term / factor
+      | factor
+
+factor -&gt; num | (expr)
+</code></pre>
+<a class="header" href="#232" id="232"><h2>2.3.2</h2></a>
+<pre><code>9 5 - 2 *
+
+E -&gt; {print(&quot;(&quot;)} E {print(op)} E {print(&quot;)&quot;}} op | digit {print(digit)}
+</code></pre>
+<a class="header" href="#233" id="233"><h2>2.3.3</h2></a>
+<pre><code>num -&gt; thousand hundred ten digit
+       { num.roman = thousand.roman || hundred.roman || ten.roman || digit.roman;
+         print(num.roman)}
+
+thousand -&gt; low {thousand.roman = repeat('M', low.v)}
+
+hundred -&gt; low {hundred.roman = repeat('C', low.v)}
+         | 4 {hundred.roman = 'CD'}
+         | high {hundred.roman = 'D' || repeat('X', high.v - 5)}
+         | 9 {hundred.roman = 'CM'}
+
+ten -&gt; low {ten.roman = repeat('X', low.v)}
+     | 4 {ten.roman = 'XL'}
+     | high {ten.roman = 'L' || repeat('X', high.v - 5)}
+     | 9 {ten.roman = 'XC'}
+
+digit -&gt; low {digit.roman = repeat('I', low.v)}
+       | 4 {digit.roman = 'IV'}
+       | high {digit.roman = 'V' || repeat('I', high.v - 5)}
+       | 9 {digit.roman = 'IX'}
+
+low -&gt; 0 {low.v = 0}
+     | 1 {low.v = 1}
+     | 2 {low.v = 2}
+     | 3 {low.v = 3}
+
+high -&gt; 5 {high.v = 5}
+      | 6 {high.v = 6}
+      | 7 {high.v = 7}
+      | 8 {high.v = 8}
+    
+
+
+</code></pre>
+<a class="header" href="#234" id="234"><h2>2.3.4</h2></a>
+<pre><code>
+romanNum -&gt; thousand hundred ten digit {romanNum.v = thousand.v || hundred.v || ten.v || digit.v; print(romanNun.v)}
+thousand -&gt; M {thousand.v = 1}
+          | MM {thousand.v = 2}
+          | MMM {thousand.v = 3}
+          | ε {thousand.v = 0}
+hundred -&gt; smallHundred {hundred.v = smallHundred.v}
+         | C D {hundred.v = smallHundred.v}
+         | D smallHundred {hundred.v = 5 + smallHundred.v}
+         | C M {hundred.v = 9}
+smallHundred -&gt; C {smallHundred.v = 1}
+              | CC {smallHundred.v = 2}
+              | CCC {smallHundred.v = 3}
+              | ε {hundred.v = 0}
+ten -&gt; smallTen {ten.v = smallTen.v}
+     | X L  {ten.v = 4}
+     | L smallTen  {ten.v = 5 + smallTen.v}
+     | X C  {ten.v = 9}
+smallTen -&gt; X {smallTen.v = 1}
+          | XX {smallTen.v = 2}
+          | XXX {smallTen.v = 3}
+          | ε {smallTen.v = 0}
+digit -&gt; smallDigit {digit.v = smallDigit.v}
+       | I V  {digit.v = 4}
+       | V smallDigit  {digit.v = 5 + smallDigit.v}
+       | I X  {digit.v = 9}
+ smallDigit -&gt; I {smallDigit.v = 1}
+            | II {smallDigit.v = 2}
+            | III {smallDigit.v = 3}
+            | ε {smallDigit.v = 0}
+</code></pre>
+<a class="header" href="#235" id="235"><h2>2.3.5</h2></a>
+<pre><code>92+3- =&gt; -+923
+
+expr -&gt; {print(op)} expr expr op | digit {print(digit)}
+</code></pre>
+<a class="header" href="#261" id="261"><h2>2.6.1</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code class="language-java">if (peek == '/') {
+      char nextLetter = (char) System.in.read();
+
+      /*
+       1. 判断是否是否以 // 开头
+       2. 如果是的则丢弃这行内容
+      */
+
+      if (nextLetter == '/') {
+        do {
+          nextLetter = (char) System.in.read();
+        } while (nextLetter != '\n');
+
+        peek = ' ';
+      }
+
+      /*
+        1. 判断是否以 /* 开头, 结尾
+        2. 如果是的则丢弃这段内容
+      */
+
+      if (nextLetter == '*') {
+        char nextCharLetter = ' ';
+        do {
+          nextLetter = (char) System.in.read();
+          nextCharLetter = (char) System.in.read();
+        } while (nextLetter != '*' &amp;&amp; nextCharLetter != '/');
+      }
+}
+</code></pre>
+<a class="header" href="#262" id="262"><h2>2.6.2</h2></a>
+<pre><code class="language-java">if (peek == '&lt;' || peek == '=' || peek == '!' || peek == '&gt;') {
+      char nextCharLetter = (char) System.in.read();
+
+      if (nextCharLetter == '=') {
+        peek = ' ';
+        return new Opeartor(Tag.OPERATOR, &quot;&quot; + peek + nextCharLetter);
+      } else {
+        peek = nextCharLetter;
+        return new Opeartor(Tag.OPERATOR, &quot;&quot; + peek);
+      }
+}
+</code></pre>
+<a class="header" href="#263" id="263"><h2>2.6.3</h2></a>
+<pre><code class="language-java">
+</code></pre>
+<a class="header" href="#nfa" id="nfa"><h1>NFA</h1></a>
+<p>NFA可以在给定输入符号上从给定状态进行零，一或多个移动。NFA也可以具有NULL移动（没有输入符号的移动）。另一方面，DFA在给定的输入符号上从给定状态只有一个动作。</p>
+<p>举例来讲解下如何将一个nfa转换为dfa</p>
+<p>比如有下面的NFA <img src="./images/nfa.png" alt="1.png" /></p>
+<table><thead><tr><th>State</th><th>a</th><th>b</th></tr></thead><tbody>
+<tr><td>q0</td><td>q0,q1</td><td>q0</td></tr>
+<tr><td>q1</td><td> </td><td>q2</td></tr>
+<tr><td>q2</td><td> </td><td> </td></tr>
+</tbody></table>
+<p>转换步骤:</p>
+<ol>
+<li>设DFA的状态集合为Q'  Q' = {q0}</li>
+<li>对于Q’中的每个状态，找到每个输入符号的状态。当前，Q’中的状态为q0，使用NFA的转换函数在输入符号a和b上从q0查找移动，并更新DFA的转换表。</li>
+</ol>
+<table><thead><tr><th>state</th><th>a</th><th>b</th></tr></thead><tbody>
+<tr><td>q0</td><td>{q0,q1}</td><td>q0</td></tr>
+</tbody></table>
+<p>因为{q0, q1}不在Q', Q' = {q0, {q0, q1}}</p>
+<ol start="3">
+<li>现在，在DFA转换表中不存在来自状态{q0，q1}的不同输入符号上的移动，我们将按照以下方式进行计算：</li>
+</ol>
+<table><thead><tr><th>state</th><th>a</th><th>b</th></tr></thead><tbody>
+<tr><td>q0</td><td>{q0,q1}</td><td>q0</td></tr>
+<tr><td>{q0, q1}</td><td>{q0,q1}</td><td>{q0, q2}</td></tr>
+</tbody></table>
+<p>因为{q0, q2} 不在Q' 里面， 所以Q' = {q0, {q0, q1}, {q0, q2}}</p>
+<table><thead><tr><th>state</th><th>a</th><th>b</th></tr></thead><tbody>
+<tr><td>q0</td><td>{q0,q1}</td><td>q0</td></tr>
+<tr><td>{q0, q1}</td><td>{q0, q1}</td><td>{q0, q2}</td></tr>
+<tr><td>{q0, q2}</td><td>{q0, q1}</td><td>{q0}</td></tr>
+</tbody></table>
+<p>所以最后Q' = {q0, {q0, q1}, {q0, q2}}</p>
+<p><img src="./images/dfa.png" alt="dfa" /></p>
+<a class="header" href="#thompson构造法" id="thompson构造法"><h2>Thompson构造法</h2></a>
+<p>Thompson构造法在计算机科学中是指一个能将正则表达式转化为一个与之等价的非确定有限状态自动机（NFA）的算法。算法得到的NFA可以在编程中用于匹配一个正则表达式，这也是正则表达式引擎实现的基本思路之一。</p>
+<p>Thompson 算法中使用最基本的两种转换:</p>
+<ol>
+<li>
+<p>不需要输入转换成另外一个状态
+<img src="./images/Thompson1.png" alt="Thompson1.png" /></p>
+</li>
+<li>
+<p>输入一个值转换成另外一个状态
+<img src="./images/Thompson2.png" alt="Thompson2.png" /></p>
+</li>
+</ol>
+<p>正则表达式的各种运算， 可以通过上述两种转换实现:</p>
+<ul>
+<li>组合运算<code>RS</code>:</li>
+</ul>
+<p><img src="./images/tho1.png" alt="tho1" /></p>
+<ul>
+<li>替换运算<code>R|S</code>:</li>
+</ul>
+<p><img src="./images/tho2.png" alt="tho2" /></p>
+<ul>
+<li>重复运算<code>R*</code>:</li>
+</ul>
+<p><img src="./images/tho3.png" alt="tho3" /></p>
+<a class="header" href="#332" id="332"><h2>3.3.2</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>a(a|b)*a = {aa*a, ab*a }
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>((ℨ|a)b*)* = {ℨ, (ab*)*, b*}
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code>(a|b)*a(a|b)(a|b) = {
+    a*a(a|b)(a|b),
+    a*(a|b),
+    a*b(a|b),
+    a*,
+    a*b,
+    a*b,
+    a*bb,
+    b*a(a|b)(a|b),
+    b*aa(a|b),
+    a*aaa,
+    b*aaab,
+    b*ab(a|b),
+    b*aba,
+    b*abb
+}
+</code></pre>
+<a class="header" href="#333" id="333"><h2>3.3.3</h2></a>
+<ol>
+<li>n + 1</li>
+<li>n + 1</li>
+<li>n - 1</li>
+<li>(n + 1) * n / 2</li>
+<li>n ^ 2</li>
+</ol>
+<a class="header" href="#334" id="334"><h2>3.3.4</h2></a>
+<pre><code>select -&gt; [Ss][Ee][Ll][Ee][Cc][Tt]
+</code></pre>
+<a class="header" href="#34" id="34"><h2>3.4</h2></a>
+<a class="header" href="#1-aaba" id="1-aaba"><h3>1. a(a|b)*a</h3></a>
+<p>NFA: <img src="./images/nfa_3_4_1.png" alt="nfa_3_4_1" /></p>
+<p>DFA:</p>
+<table><thead><tr><th>state</th><th>a</th><th>b</th></tr></thead><tbody>
+<tr><td>{0}</td><td>{1}</td><td> </td></tr>
+<tr><td>{1}</td><td>{2, 3, 4, 5, 7, 8, 9}</td><td>{2, 3, 5, 6, 7, 8}</td></tr>
+<tr><td>{2, 3, 4, 5, 7, 8, 9}</td><td>{2,3,4,5,6,7,8,9}</td><td>{2, 3, 5, 6, 7, 8}</td></tr>
+<tr><td>{2, 3, 5, 6, 7, 8}</td><td>{2,3,4,5,6,7,8,9}</td><td>{2, 3, 5, 6, 7, 8}</td></tr>
+</tbody></table>
+<p>设</p>
+<ul>
+<li>{0} = A</li>
+<li>{1} = B</li>
+<li>{2, 3, 4, 5, 7, 8, 9} = C</li>
+<li>{2, 3, 5, 6, 7, 8} = D</li>
+</ul>
+<p><img src="./images/dfa_3_4_1.png" alt="dfa_3_4_1" /></p>
+<p>合并不可区分状态B, D</p>
+<p><img src="./images/dfa_last.png" alt="dfa_last" /></p>
+<a class="header" href="#343" id="343"><h2>3.4.3</h2></a>
+<ol>
+<li>abababaab</li>
+</ol>
+<table><thead><tr><th>s</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead><tbody>
+<tr><td>f(s)</td><td>0</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>1</td><td>2</td></tr>
+</tbody></table>
+<a class="header" href="#35" id="35"><h2>3.5</h2></a>
+<p>while {return(WHILE)}</p>
+<ol start="2">
+<li></li>
+</ol>
+<a class="header" href="#理论" id="理论"><h1>理论</h1></a>
+<a class="header" href="#左递归的消除" id="左递归的消除"><h2>左递归的消除</h2></a>
+<p>如果一个文法中有一个非终结符号A使得对某个串𝛂存在一个推导A =&gt; A𝛂, 那么这个文法就是左递归的。</p>
+<p>例子, 将左递归的式子替换为非左递归的</p>
+<pre><code>A -&gt; A𝛂 | 𝞫
+
+=&gt; 
+
+A  -&gt; 𝞫A'
+A' -&gt; 𝛂A' | ℇ
+</code></pre>
+<a class="header" href="#提取左公因子" id="提取左公因子"><h2>提取左公因子</h2></a>
+<p>提取左公因子是一种文法转换文法， 它可以产生适用于预测分析技术或自顶向下分析技术的文法。</p>
+<p>例子</p>
+<pre><code>
+A -&gt; 𝛂𝞫1 | 𝛂𝞫2
+
+=&gt; 
+
+A -&gt; 𝛂A'
+
+A' -&gt; 𝞫1 | 𝞫2
+</code></pre>
+<a class="header" href="#first-和-follow" id="first-和-follow"><h2>First 和 Follow</h2></a>
+<p>自顶向下和自底向上语法分析器的构造可以使用和文法G相关的两个函数FIRST和FOLLOW来实现.</p>
+<p>FIRST(a)被定义为可从a推导得到的串的首符号的集合， 其中a是任意的文法符合串。 如果 a =&gt; ℇ, 那么ℇ也在FIRST(a)中。
+比如</p>
+<pre><code>S =&gt; ab 
+FIRST(S) = a
+</code></pre>
+<p>对于非终结符号A, FOLLOW(A)被定义为可能在某些句型中紧跟在A右边的终结符号的集合。</p>
+<p>比如</p>
+<pre><code>S =&gt; aAaB  
+
+FOLLOW(A) = a 
+</code></pre>
+<p>另外如果A是某些句型的最右符号, 那么$也在FOLLOW(A)中, $是一个特殊的结束标记符号。</p>
+<p><strong>计算各个符号X的FIRST(X)时， 不断应用下列规则， 直到再没有新的终结符号或ℇ可以被加入到任何FIRST集合中为止:</strong></p>
+<ol>
+<li>如果X是一个终结符号， 那么FIRST(X) = X</li>
+<li>如果X是一个非终结符号， 且X-&gt;Y1Y2...Yk是一个产生式, 其中K &gt;= 1, 那么如果对于某个i, a在FIRST(Yi)中且ℇ 在所有的FIRST(Y1) ... FIRST(yi - 1)中， 那么FIRST(X) = a</li>
+<li>如果X -&gt; ℇ 是一个产生式, 那么将ℇ加入到FIRST(X)中.</li>
+</ol>
+<p><strong>计算所有非终结符号A的FOLLOW(A)集合时候， 不断应用下面的规则， 知道再没有新的终结符号可以被加入到任意FOLLOW集合中为止</strong></p>
+<ol>
+<li>将$放到FOLLOW(S)中， 其中S是开始符号, 而$是输入右端的结束标记.</li>
+<li>如果存在一个产生式A -&gt; 𝞪B𝞫, 那么FIRST(𝞫)中除ℇ之外的所有符号都在FOLLOW(B)中。</li>
+<li>如果存在一个产生式A -&gt; 𝞪B, 或存在产生式A -&gt; 𝞪B𝞫 且FIRST(𝞫)包含ℇ, 那么FOLLOW(A)中所有符号都在FOLLOW(B)中。</li>
+</ol>
+<a class="header" href="#ll1" id="ll1"><h2>LL(1)</h2></a>
+<p>对于称为LL(1)的文法， 我们可以构造出预测分析器, 既不需要回溯的递归下降语法分析器。 第一个L表示从左到右扫描输入, 第二个L表示产生最左推导, &quot;1&quot; 表示每一步中只需要向前看一个输入符号来决定语法分析动作。</p>
+<p>一个文法G是LL(1)的， 当切仅当G的任意两个不同的产生式A -&gt; 𝞪 | 𝞫满足下面的条件:</p>
+<ol>
+<li>不存在终结符号a使得𝞪和𝞫都能够推导出a开头的串</li>
+<li>𝞪和𝞫最多只有一个可以推导出空串</li>
+<li>如果𝞫 =&gt; ℇ, 那么𝞪不能推导出任何以FOLLOW(A)中某个终结符号开头的串。 类似地, 如果𝞪 =&gt; ℇ， 那么𝞫不能推导出任何以FOLLOW(A)中某个终结符号开头的串</li>
+</ol>
+<a class="header" href="#构造一个预测分析表" id="构造一个预测分析表"><h2>构造一个预测分析表</h2></a>
+<p>对于文法G的每个产生式A -&gt; 𝞪， 进行如下处理</p>
+<ol>
+<li>对于FIRST(𝞪)中的每个终结符号𝞪， 将A-&gt;𝞪加入到M[A, 𝞪]中。</li>
+<li>如果ℇ在FIRST(𝞪)中， 那么对于FOLLOW(A)中的每个终结符号b, 将A -&gt; 𝞪加入到M[A, b]中。 如果ℇ 在FIRST(𝞪)中， 且$在FOLLOW(A)中， 也将A-&gt;𝞪加入到[A, $]中。</li>
+<li>在完成上面的操作之后， 如果M[A, 𝞪]中没有产生式， 那么将M[A, 𝞪]设置为空.</li>
+</ol>
+<a class="header" href="#lr语法" id="lr语法"><h2>LR语法</h2></a>
+<p>LR语法分析是表格驱动, 原因如下：</p>
+<ul>
+<li>对于几乎所有的程序设计语言构造， 只要能够写出该构造的上下文无关文法， 就能够构造出识别该构造的LR语法分析器。</li>
+<li>LR语法分析方法是已知的最通用的无回溯 - 规约分析技术</li>
+<li>一个LR语法分析器可以在输入进行从左到右扫描时尽可能地检测到错误.</li>
+<li></li>
+</ul>
+<a class="header" href="#421" id="421"><h1>4.2.1</h1></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>S = lm =&gt; SS* =&gt; SS+S* =&gt; as+s* =&gt; aa+s* =&gt; aa+a*
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>s = rm =&gt; SS* =&gt; sa* =&gt; ss+a* =&gt; sa+a* =&gt; aa+a*
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<p><img src="./images/4_2_1.png" alt="4_2_1.png" /></p>
+<ol start="4">
+<li>否</li>
+</ol>
+<ol start="5">
+<li>L = {11+}</li>
+</ol>
+<a class="header" href="#422" id="422"><h2>4.2.2</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>S -&gt; 0 S 1 | 0 1  和串000111
+</code></pre>
+<pre><code>S = lm =&gt; 0 S 1  =&gt; 0 0 S 1 1 =&gt; 0 0 0 1 1 1 
+S = rm =&gt; 0 S 1  =&gt; 0 0 S 1 1 =&gt; 0 0 0 1 1 1 
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>S -&gt; + S S | * S S | a 和串 + *aaa
+</code></pre>
+<pre><code>S = lm = + S S = + * S S S = + * a S S  = +*aaa 
+S = rm = + S S = + S a = + * S S a = + * S a a = +*aaa 
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code>S -&gt; S (S) S -&gt; | ℇ 和串(()())
+</code></pre>
+<pre><code>S = lm =&gt; S (S) S =&gt; ℇ (S) S =&gt; ℇ (S (S) S) S =&gt; (S (S) S (S) S) S =&gt; 
+    (ℇ (S) s (S) S) =&gt; ... =&gt; (()())
+
+S = rm =&gt; S (S) S =&gt; S (S) ℇ =&gt; S (S (S) S) =&gt; S (S (S) S (S) S) =&gt; 
+ ... =&gt; (()())
+
+</code></pre>
+<a class="header" href="#423" id="423"><h2>4.2.3</h2></a>
+<ol>
+<li></li>
+</ol>
+<p>所有由0和1组合成的串， 并且每个0后面至少跟着1个1</p>
+<pre><code>S -&gt; (0?1)*
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>S -&gt; 0S0 | 1S1 | 0 | 1 | ε
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code>S -&gt; 0S1S | 1S0S | ε
+</code></pre>
+<ol start="4">
+<li></li>
+</ol>
+<pre><code>S -&gt; 01S | 1S0 | 1 | 0
+</code></pre>
+<ol start="5">
+<li></li>
+</ol>
+<p>不包含011</p>
+<pre><code>S -&gt; 1*(0+1?)*
+</code></pre>
+<a class="header" href="#425" id="425"><h2>4.2.5</h2></a>
+<pre><code>stmt -&gt; if expr then stmt [else stmt]
+        | begin stmtlist end 
+
+stmtlist -&gt; stmt [; stmtList]
+</code></pre>
+<a class="header" href="#441" id="441"><h2>4.4.1</h2></a>
+<a class="header" href="#s---0-s-1--0-1" id="s---0-s-1--0-1"><h3>S -&gt; 0 S 1 | 0 1</h3></a>
+<ol>
+<li>
+<p>提取左公因子</p>
+<p>S -&gt; 0A
+A -&gt; S 1 | 1</p>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p>消除左递归</p>
+<p>S -&gt; 0A
+A -&gt; 0 A 1 | 1</p>
+</li>
+<li>
+<p>预测分析表</p>
+</li>
+</ol>
+<table><thead><tr><th>非终结符号</th><th>0</th><th>1</th><th>$</th></tr></thead><tbody>
+<tr><td>S</td><td>S -&gt; 0A</td><td> </td><td> </td></tr>
+<tr><td>A</td><td>A -&gt; 0 A 1</td><td>A -&gt; 1</td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#s----s-s---s-s--a" id="s----s-s---s-s--a"><h3>S -&gt; + S S | * S S | a</h3></a>
+<ol>
+<li>
+<p>无左公因子</p>
+</li>
+<li>
+<p>无左递归</p>
+</li>
+</ol>
+<table><thead><tr><th>非终结符号</th><th>+</th><th>* </th><th>a</th><th>$</th></tr></thead><tbody>
+<tr><td>S</td><td>S -&gt; + S S </td><td> S -&gt; * S S </td><td> S -&gt; a </td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#s---s-s-s--ℇ" id="s---s-s-s--ℇ"><h3>S -&gt; S (S) S | ℇ</h3></a>
+<ol>
+<li>
+<p>无左公因子</p>
+</li>
+<li>
+<p>消除左递归</p>
+</li>
+</ol>
+<pre><code>    S -&gt; A
+
+    A -&gt; (S) S A | ℇ
+</code></pre>
+<ol start="3">
+<li>预测分析表</li>
+</ol>
+<table><thead><tr><th>非终结符号</th><th>( </th><th> ) </th><th>$</th></tr></thead><tbody>
+<tr><td>S</td><td>S-&gt;A</td><td> S-&gt;A</td><td> S-&gt;A</td></tr>
+<tr><td>A</td><td>A -&gt; (S) S A <br> A -&gt; ℇ </td><td>A -&gt; ℇ</td><td> A -&gt; ℇ</td></tr>
+</tbody></table>
+<a class="header" href="#s---s--s--s-s---s---s--a" id="s---s--s--s-s---s---s--a"><h3>S -&gt; S + S | S S | ( S ) | S* | a</h3></a>
+<ol>
+<li>提取左公因子</li>
+</ol>
+<pre><code>    S -&gt; SA | (S) | a
+    A -&gt; +S |  S  |  * 
+
+=&gt;
+    S -&gt; SA |  T 
+    A -&gt; +S |  S  |  * 
+    T -&gt; (S) | a 
+
+</code></pre>
+<ol start="2">
+<li>消除左递归</li>
+</ol>
+<pre><code>
+i = 1
+    S -&gt; TB
+    B -&gt; AB | ε
+
+i = 2
+ j = 1 
+    A -&gt; + S | TB | * 
+
+i = 3
+ j = 1 
+    无需处理
+ j = 2
+    无需处理
+
+最终得到的产生式：
+    S -&gt; TB
+    B -&gt; AB | ε
+    A -&gt; + S | TB | *
+    T -&gt; (S) | a
+</code></pre>
+<ol start="3">
+<li>预测表</li>
+</ol>
+<pre><code>FIRST(S) = FIRST(T) = { (, a }
+
+FIRST(B) = {FIRST(A), ε}  = { + , (, a, *, ε }
+
+FIRST(A) = {+ , first(T), *} = {+, (, a, *}
+
+FIRST(T) = { (, a }
+
+
+FOLLOW(T) = {$ FIRST(B)} = {$ , + , (, a, *}
+
+FOLLOW(A) = {$ | FIRST(B) | FOLLOW(S)} = {$ , + , (,  a, *, )}
+
+FOLLOW(B) = {$}
+
+FOLLOW(S) = {FOLLOW(A) =  {$ , + , (,  a, *, )}
+</code></pre>
+<p>(A-&gt;TB 存在ε)</p>
+<table><thead><tr><th>非终结符号</th><th> + </th><th> * </th><th> ( </th><th> ) </th><th> a </th><th> $ </th></tr></thead><tbody>
+<tr><td>S</td><td>  </td><td> </td><td> S-&gt;TB </td><td> </td><td> S-&gt;TB</td><td> </td></tr>
+<tr><td>B</td><td> B-&gt;AB </td><td> B-&gt;AB</td><td> B-&gt;AB </td><td> </td><td> B-&gt;AB</td><td> B-&gt;ε</td></tr>
+<tr><td>A</td><td> A-&gt;+S </td><td> A-&gt;*</td><td> A-&gt;TB</td><td> </td><td> A-&gt;TB</td></tr>
+<tr></tr>
+<tr><td>T</td><td> </td><td> </td><td> T-&gt;(S)</td><td> </td><td> T-&gt; a </td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#442" id="442"><h3>4.4.2</h3></a>
+<a class="header" href="#445" id="445"><h3>4.4.5</h3></a>
+<pre><code>S -&gt; aSa | aa 
+
+=&gt; 
+
+   S -&gt; aB
+   B -&gt; Sa | a 
+   C -&gt; aC | ε
+</code></pre>
+<a class="header" href="#语法制导的翻译" id="语法制导的翻译"><h1>语法制导的翻译</h1></a>
+<a class="header" href="#语法制导定义" id="语法制导定义"><h2>语法制导定义</h2></a>
+<p>语法制导定义(ssd)是一个上下文无关文法和属性及规则的结合。 属性和文法符号相关联, 而规则和产生式相关联。</p>
+<p>非终结符号T和F中各有一个综合属性val， 终结符号digit有一个综合属性lexval。 非终结符号T'具有两个属性： 继承属性inh和综合属性syn。 这些语义规则基于如下思想： 运算符*的左运算分量是通过继承得到的, 给定一个项 <code>x * y * z</code>， 对应于 <code>* y * z</code> 的子树的根节点继承了x的值。</p>
+<p>如果一个sdd的每个属性都是综合属性， 它就是s属性。 如果一个sdd是s属性的， 我们可以按照语法分析树结点的任何自底向上顺序来计算它的各个属性值。</p>
+<p>第二个ssd是在一个产生体所关联的各个属性之间，依赖图的边总是从左到右, 而不能从右到左</p>
+<a class="header" href="#语法制导的翻译方案" id="语法制导的翻译方案"><h2>语法制导的翻译方案</h2></a>
+<p>语法制导的翻译方案SDT是在其产生式体中嵌入了程序片段的一个上下文无关文法, 这些程序片段称为语义动作。</p>
+<p>任何SDT可以通过以下方法实现:</p>
+<ol>
+<li>首先建立一棵语法分析树, 然后按照从左到右的深度优先顺序来执行这些动作， 也就是说在一个前序过程中执行。</li>
+</ol>
+<a class="header" href="#后缀翻译方案" id="后缀翻译方案"><h2>后缀翻译方案</h2></a>
+<p>最简单的实现SDD的情况是文法可以用自底向上方法来分析且该SDD是S属性定义。 所有动作都在产生式最右端的SDT称为后缀翻译方案。</p>
+<a class="header" href="#习题答案" id="习题答案"><h1>习题答案</h1></a>
+<a class="header" href="#522" id="522"><h2>5.2.2</h2></a>
+<p><img src="./images/1.png" alt="1.png" /></p>
+<p><img src="./images/2.png" alt="2.png" /></p>
+<a class="header" href="#524" id="524"><h2>5.2.4</h2></a>
+<pre><code>S -&gt; L . L | L 
+L -&gt; L  B  | B
+B -&gt; 0 | 1 
+</code></pre>
+<p>s
+|产生式|语义规则|
+|----|----|
+|S-&gt;L1.L2|L1.isLeft = true<br>L2.isLeft=false<br>S.val = L1.val + L2.val|
+|S-&gt;L|L.isLeft = true<br>S.val = L.val|
+|L1-&gt;L2B|L1.isLeft=true<br>L1.len + 1<br>L1.val = L1.isLeft ? L2.val * 2 + B.val : L1.val + B.val * 2 ^(-L.len)
+|L-&gt;B|L.len = 1 <br> L.val = L.isLeft ? B.val : B.val / 2|
+|B-&gt;0|B.val = 0|
+|B-&gt;1|B.val = 1|</p>
+<p>其中:</p>
+<ul>
+<li>isLeft为继承属性， 表示节点是否在小数点的左边</li>
+<li>len为综合属性， 表示节点包含的二进制串的长度</li>
+<li>val为综合属性</li>
+</ul>
+<a class="header" href="#525" id="525"><h2>5.2.5</h2></a>
+<table><thead><tr><th>产生式</th><th>语义规则</th></tr></thead><tbody>
+<tr><td>S-&gt;L_1.L_2</td><td>S.val = L_1.val + L_2.val / L_2.f</td></tr>
+<tr><td>S-&gt;L</td><td>S.val = L.val </td></tr>
+<tr><td>L-&gt;L1B</td><td>L.val = L_1.val * 2 + B.val <br> L.f = L_1.f * 2</td></tr>
+<tr><td>L-&gt;B</td><td>L.val = B.val <br> L.f = 2</td></tr>
+<tr><td>B-&gt;0</td><td>B.val = 0 </td></tr>
+<tr><td>B-&gt;1</td><td>B.val = 1 </td></tr>
+</tbody></table>
+<a class="header" href="#531" id="531"><h2>5.3.1</h2></a>
+<ol>
+<li></li>
+</ol>
+<table><thead><tr><th>产生式</th><th>语义规则</th></tr></thead><tbody>
+<tr><td>E -&gt; E_1 + T</td><td>E.type = E_1.type == float||T.type == float ? float : int</td></tr>
+<tr><td>E -&gt; T </td><td>E.type = T.type</td></tr>
+<tr><td>T -&gt; num1.num2 </td><td>T.type = float</td></tr>
+<tr><td>T -&gt; num </td><td> T.type = int</td></tr>
+</tbody></table>
+<ol start="2">
+<li></li>
+</ol>
+<ul>
+<li>wrapped: 表达式最外层是否有括号</li>
+<li>procedence: 令+, *, ()和单digit的优先级分别为0, 1,  2, 4。 如果表达式最外层有括号， 则为去掉括号后最后被计算的运算符的优先级， 否则为表达式最后被计算的运算符的优先级.</li>
+<li>expr: 表达式</li>
+<li>cleanExpr: 去除了冗余括号的表达式。</li>
+</ul>
+<table><thead><tr><th align="center"> </th><th>产生式</th><th>语法规则</th></tr></thead><tbody>
+<tr><td align="center">1)</td><td align="center">L -&gt; En</td><td align="center"> L.cleanExpr = E.wrapped ? E.cleanExpr : E.expr</td></tr>
+<tr><td align="center">2)</td><td align="center">E -&gt; E_1 + T </td><td align="center"> E.wrapped = false <br> E.precedence = 0 <br> E.expr = E_1.expr || &quot; + &quot; || T.expr <br>E.cleanExpr = (E_1.wrapped ? E_1.cleanExpr : E_1.expr) || (T.wrapped ? T.cleanExpr : T.expr)</td></tr>
+<tr><td align="center">3)</td><td align="center">E -&gt; T</td><td align="center"> E.wrapped = T.wrapped <br> E.precedence = T.precedence <br> E.expr = T.expr <br> E.cleanExpr = T.cleanExpr</td></tr>
+<tr><td align="center">4)</td><td align="center">T -&gt; T_1 * F </td><td align="center">T.wrapped = false <br> T.precedence = 1 <br> T.expr = T_1.expr || &quot;*&quot; || F.expr <br> T.cleanExpr = (T_1.wrapped &amp;&amp; T_1.precedence &gt;= 1 ? T_1.cleanExpr : T_1.expr) || * || (F.wrapped &amp;&amp; F.precedence &gt;= 1 ? F.cleanExpr : F.expr)</td></tr>
+<tr><td align="center">5)</td><td align="center">T -&gt; F </td><td align="center">E.wrapped = T.wrapped <br> E.precedence = T.precedence <br> E.expr = T.expr <br> E.cleanExpr = T.cleanExpr</td></tr>
+<tr><td align="center">6)</td><td align="center">F -&gt; (E)</td><td align="center">F.wrapped = true<br>F.precedence = E.precedence<br>F.expr = &quot;(&quot; || E.expr || &quot;)&quot;<br>F.cleanExpr = E.expr</td></tr>
+<tr><td align="center">7)</td><td align="center">F-&gt;digit</td><td align="center">F.wrapped = false<br>F.precedence=3<br>F.expr=digit<br>F.cleanExpr=digit</td></tr>
+</tbody></table>
+<a class="header" href="#中间代码生成" id="中间代码生成"><h1>中间代码生成</h1></a>
+<p>三地址代码: 一条指令的右侧最多有一个运算符。像x + y * z翻译成如下的三地址指令序列</p>
+<pre><code>t1 = y * z
+t2 = x + t1 
+</code></pre>
+<p>一个四元式有四个字段， 分别称为op, arg1, arg2, result。 四元式表示:  <code>x = y + z</code>
+对应的四元式为 <code>op 存放 + ， arg1 存放 y , arg2存放 z, result存放x</code></p>
+<p>三元式只有三个字段, 分别称之为 <code>op, arg1, arg2</code></p>
+<a class="header" href="#静态单赋值形式" id="静态单赋值形式"><h2>静态单赋值形式</h2></a>
+<p>静态单赋值形式(SSA)是另一种中间表示形式, 它有利于实现某些类型的代码优化。 SSA与三地址代码的区别主要体现在两个方面:</p>
+<ol>
+<li>SSA中的所有赋值都是针对具有不同名字的变量的</li>
+<li>SSA使用一种称为𝛗函数的表示规则将x的两处定值合并起来</li>
+</ol>
+<a class="header" href="#类型推导" id="类型推导"><h2>类型推导</h2></a>
+<p>类型检查有两种形式: 综合和推导。</p>
+<ul>
+<li>类型综合根据子表达式的类型构造出表达式的类型， 它要求名字先声明再使用。</li>
+<li>类型推导根据一个语言结构的使用方式来确定该结构的类型。</li>
+</ul>
+<a class="header" href="#类型合一算法" id="类型合一算法"><h3>类型合一算法</h3></a>
+<p>输入: 一个表示类型的图， 以及需要进行合一处理的结点对 m 和 n</p>
+<p>输出: 如果结点m 和 n 表示的表达式可以合一, 返回true, 反之返回false.</p>
+<p>实现步骤:</p>
+<ol>
+<li>结点用一个记录实现， 记录中的字段用于存放一个二元计算符和分别指向其左右子结点的指针。</li>
+<li>字段set用于保存等价结点的集合</li>
+<li>每个等价类都有一个结点被选作这个类的唯一代表， 它的set字段包含一个空指针。</li>
+</ol>
+<a class="header" href="#回填" id="回填"><h2>回填</h2></a>
+<p>它把一个由跳转指令组成的列表以综合属性的形式进行传递, 明确地讲， 生成一个跳转指令时暂时不指定该跳转指令的目标。</p>
+<a class="header" href="#631" id="631"><h2>6.3.1</h2></a>
+<pre><code>float x ;
+record {float x; float y} p;
+record {int tag; float x; float y;} q;
+</code></pre>
+<p>解答:</p>
+<p>SDT</p>
+<pre><code>S -&gt;                {top = new Env(); offset = 0;}              
+    D
+
+D -&gt; T id;          {top.put(id.lexme, T.type, offset); offset += T.width}
+    D1
+
+
+D -&gt; ε     
+T -&gt; int            {T.type = interger; T.width = 4}
+T -&gt; float          {T.type = float; T.width = 8}
+
+T -&gt; record '{'     {Evn.push(top), top = new Evn(); Stack.push(offset), offset = 0;}
+
+    D '}'           {T.type = record(top); T.width = offset; top = Evn.top(); offset = Stack.pop();}
+</code></pre>
+<pre><code>line    id      type    offset      Evn
+
+1)      x       float    0          1
+
+2)      x       float    0          2
+
+2)      y       float    8          2
+
+2)      p       record   8          1
+
+3)      tag     int      0          3
+
+3)      x       float    4          3
+
+3)      y       float    12         3
+
+3)      q       record() 24         1  
+</code></pre>
+<a class="header" href="#运行时刻环境" id="运行时刻环境"><h1>运行时刻环境</h1></a>
+<p>数据对象的存储布局受目标机的寻址约束的影响很大。 在很多机器上， 执行整数加法的指令可能要求整数是对齐的， 也就是说这些数必须被放在一个能够被4整除的地址上。比如一个10个字符的数组，但是编译器可能为了对齐而给它分配12个字节， 其中的两个字节未使用， 因为对齐的原因而产生的闲置时间称为<strong>补白</strong>。</p>
+<p>静态存储:  编译器只需要观察程序文本即可做出某个存储分配决定， 而不需要观察该程序在运行时做出了什么， 我们就认为这个存储分配决定时静态的。
+动态存储:  只有在程序运行时才能做出决定， 那么这个决定就是动态的。</p>
+<p>很多编译器使用下列两种策略的某种组合进行动态存储分配:</p>
+<ul>
+<li>栈式存储。 一个过程的局部名字在栈中分配空间。</li>
+<li>堆式存储。 有些数据的生命周期要比创造它的某次过程调用更长， 这些数据通常被分配在一个可复用存储的&quot;堆&quot;中。</li>
+</ul>
+<p><strong>活动树:</strong> 用一棵树来表示在整个程序运行期间的所有过程活动</p>
+<p>活动树和程序行为之间存在下列多种有用的对应关系， 正是因为这些关系使我们可以使用运行时刻栈：</p>
+<p>1） 过程调用的序列和活动树的前序遍历相对应
+2） 过程返回的序列和活动树的后续遍历相对应</p>
+<a class="header" href="#调用代码序列" id="调用代码序列"><h2>调用代码序列</h2></a>
+<p>实现过程调用的代码称为调用代码序列. 这个代码序列为一个活动记录在栈中分配空间， 并在此记录的字段中填写信息， 返回代码序列是一段类似的代码， 它恢复机器状态， 使得调用过程能够在调用结束之后继续执行。</p>
+<a class="header" href="#访问链" id="访问链"><h2>访问链</h2></a>
+<p>针对嵌套函数的通常的静态作用域规则的一个直接实现方法是在每个活动记录中增加一个被称为访问链的指针。</p>
+<a class="header" href="#存储管理器" id="存储管理器"><h2>存储管理器</h2></a>
+<p>现代计算器都以存储层次结构的方式安排它们的存储， 如图所示
+<img src="./images/1.png" alt="1.png" />
+较小较快的元素&quot;更加接近&quot;处理器， 较大较慢的元素则离存储器比较远, 在一次内存访问中， 机器首先在最近的存储中寻找数据， 如果数据不在哪里则到上一层中寻找， 以此类推。</p>
+<ol>
+<li>数据以连续块的方式进行传输。 为了分摊访问的开销， 内存层次结构中较慢的层次通常使用较大的块， 在主存和高速缓存之间的数据是按照被称为高速缓存线的块进行传输。 在虚拟内存(磁盘)和主内存之间的数据是以被称为&quot;页&quot;的内存块进行传输的， 页的大小通常在4 - 64kb之间。</li>
+</ol>
+<p>应对存储管理的规范：</p>
+<ol>
+<li>当对象的生命周期能够被静态推导出来时候， 可以使用<em>对象所有者</em>的概念, 所有者是指向这个对象的一个指针， 所有者负责删除这个对象或者把这个对象传递给另一个所有者.</li>
+<li>当对象的生命周期需要动态确定时候， 引用计数会有所帮助, 它的基本思想是给每个动态分配的对象附上一个计数， 在指向这个对象的引用或被创建时， 我们将此对象的引用计数加一， 当一个引用被删除时， 我们将此引用计数减一。 当计数变成0时， 这个对象就不会再被引用， 因此可以被删除.</li>
+<li>对于其生命周期局限于计算过程中的某个特定阶段的一组对象， 可以使用基于区域的分配方法， 也就是内存池。</li>
+</ol>
+<a class="header" href="#引用计数垃圾回收器" id="引用计数垃圾回收器"><h3>引用计数垃圾回收器</h3></a>
+<p>引用计数可以按照下面的方法进行维护:</p>
+<ol>
+<li>对象分配。 新对象的引用计数被设置为1</li>
+<li>参数传递。 被传递给一个过程的每个对象的引用计数加一.</li>
+<li>引用赋值。 如果u和v都是引用， 对于语句u = v， v指向的对象的引用计数加一， u本来指向的原对象的引用计数减一</li>
+<li>过程返回。 当一个过程退出时， 该过程记录的局部变量所指向的对象的引用必须减一。</li>
+<li>可达性的传递丢失， 当一个对象的引用计数变成0时， 我们必须将该对象中的各个引用所指向的每个对象的引用计数减1。</li>
+</ol>
+<p>引用计数的缺点：</p>
+<ol>
+<li>它不能回收不可达的循环数据结构， 并且它的开销较大。</li>
+</ol>
+<p>优势：</p>
+<ol>
+<li>在于垃圾回收是以增量方式完成的。</li>
+</ol>
+<a class="header" href="#习题答案-1" id="习题答案-1"><h1>习题答案</h1></a>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

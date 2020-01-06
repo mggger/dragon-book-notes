@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>一个简单的语法制导翻译器 - 龙书笔记</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../chapter2/theory.html" class="active"><strong aria-hidden="true">1.</strong> 一个简单的语法制导翻译器</a></li><li><ol class="section"><li><a href="../chapter2/answer.html"><strong aria-hidden="true">1.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter3/theory.html"><strong aria-hidden="true">2.</strong> 词法分析</a></li><li><ol class="section"><li><a href="../chapter3/answer.html"><strong aria-hidden="true">2.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter4/theory.html"><strong aria-hidden="true">3.</strong> 语法分析</a></li><li><ol class="section"><li><a href="../chapter4/answer.html"><strong aria-hidden="true">3.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter5/theory.html"><strong aria-hidden="true">4.</strong> 语法制导的翻译</a></li><li><ol class="section"><li><a href="../chapter5/answer.html"><strong aria-hidden="true">4.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter6/theory.html"><strong aria-hidden="true">5.</strong> 中间代码生成</a></li><li><ol class="section"><li><a href="../chapter6/answer.html"><strong aria-hidden="true">5.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter7/theory.html"><strong aria-hidden="true">6.</strong> 运行时刻环境</a></li><li><ol class="section"><li><a href="../chapter7/answer.html"><strong aria-hidden="true">6.1.</strong> 习题答案</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">龙书笔记</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#一个简单的语法制导翻译器" id="一个简单的语法制导翻译器"><h1>一个简单的语法制导翻译器</h1></a>
+<p>一些概念:</p>
+<p><strong>文法:</strong> 用于描述程序设计语言语法的表示方法, 或称为上下文无关文法。 文法用于组织编译器前端.</p>
+<p>比如java中的IF-else语句, 通常具有以下形式</p>
+<pre><code>if (expr) statment else statment 
+
+可以用变量expr表示表达式， 变量stmt表示语句
+
+stmt -&gt; if (expr) stmt else stmt
+</code></pre>
+<p>像关键字<code>if</code> 这样的词法元素称为 <code>终结符号</code>。 像 <code>expr</code> 和<code>stmt</code>这样的变量表示终结符号的序列， 可以称为<code>非终结符号</code>.</p>
+<p><strong>文法由下面4个元素组成:</strong></p>
+<ul>
+<li>一个终结符号集合， 有时候被称为&quot;词法单元&quot;</li>
+<li>一个非终结符号的集合， 它们有时被称为&quot;语法变量&quot;</li>
+<li>一个产生式集合</li>
+<li>指定一个非终结符号为开始符号</li>
+</ul>
+<hr />
+<p>推导:  根据文法推到符号串时候， 首先从开始符号出发， 不断将某个非终结符号替换为该非终结符号的某个产生式的体。 可以从开始符号推到得到的所有终结符号串的集合为该文法定义的语言。</p>
+<a class="header" href="#树的遍历" id="树的遍历"><h2>树的遍历</h2></a>
+<p><strong>深度遍历:</strong> 尽可能地访问一个结点的尚未被访问的子结点.</p>
+<pre><code>procedure visit(node N) {
+    for (从左到右遍历N的每个子结点C) {
+        visit(C);
+    }
+
+    xxx
+}
+</code></pre>
+<p><strong>前序遍历:</strong> 遍历一棵树， 如果动作在第一次访问一个结点时被执行
+<strong>后序遍历:</strong> 遍历一棵树， 如果动作在最后离开节点前执行.</p>
+<a class="header" href="#递归下降语法" id="递归下降语法"><h2>递归下降语法</h2></a>
+<p>递归下降分析方法是一种自顶向下的语法分析方法, 它使用一组递归过程来处理输入。</p>
+<p>递归下降语法分析器有可能进入无限循环， 当出现一些产生式时， 分析器会出现无限循环. 比如<code>expr -&gt; expr + term</code></p>
+<p>左递归: 产生式 <code>A -&gt; Aa</code> 的右部最左符号是A自身， 非终结符号A和它的产生式称为左递归的.</p>
+<p>右递归: 产生式 <code>R -&gt; aR</code> 的右部最右符合是R本身， 非终结符号R和它的产生式称为右递归的.</p>
+<a class="header" href="#尾递归" id="尾递归"><h2>尾递归</h2></a>
+<p>如果一个过程体执行的最后一条语句是对该过程的递归调用， 那么这个调用就是称为是尾递归的.</p>
+<a class="header" href="#三地址码" id="三地址码"><h2>三地址码</h2></a>
+<p>一旦抽象语法树构造完成， 我们就可以计算树中各结点的属性值并执行各节点中的代码片段， 进行进一步的分析和综合。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="../chapter2/answer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a href="../chapter2/answer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

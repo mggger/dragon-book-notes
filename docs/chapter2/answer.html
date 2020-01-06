@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>习题答案 - 龙书笔记</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../chapter2/theory.html"><strong aria-hidden="true">1.</strong> 一个简单的语法制导翻译器</a></li><li><ol class="section"><li><a href="../chapter2/answer.html" class="active"><strong aria-hidden="true">1.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter3/theory.html"><strong aria-hidden="true">2.</strong> 词法分析</a></li><li><ol class="section"><li><a href="../chapter3/answer.html"><strong aria-hidden="true">2.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter4/theory.html"><strong aria-hidden="true">3.</strong> 语法分析</a></li><li><ol class="section"><li><a href="../chapter4/answer.html"><strong aria-hidden="true">3.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter5/theory.html"><strong aria-hidden="true">4.</strong> 语法制导的翻译</a></li><li><ol class="section"><li><a href="../chapter5/answer.html"><strong aria-hidden="true">4.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter6/theory.html"><strong aria-hidden="true">5.</strong> 中间代码生成</a></li><li><ol class="section"><li><a href="../chapter6/answer.html"><strong aria-hidden="true">5.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter7/theory.html"><strong aria-hidden="true">6.</strong> 运行时刻环境</a></li><li><ol class="section"><li><a href="../chapter7/answer.html"><strong aria-hidden="true">6.1.</strong> 习题答案</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">龙书笔记</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#221" id="221"><h2>2.2.1</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>    s -&gt; s s *
+        -&gt; s a *
+         -&gt; aa + a*
+</code></pre>
+<ol start="2">
+<li>graphviz 节点名不能重复, sad</li>
+</ol>
+<p><img src="./dots/2_2_1.png" alt="1.png" /></p>
+<ol start="3">
+<li>只支持自身 <code>+</code> <code>*</code> 运算的语言</li>
+</ol>
+<a class="header" href="#222" id="222"><h2>2.2.2</h2></a>
+<ol>
+<li><code>0 1 0 1..... (0 1)序列必须出现一次</code></li>
+<li><code>a + a | a - a | ...</code></li>
+</ol>
+<a class="header" href="#224" id="224"><h2>2.2.4</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>expr -&gt;  expr expr op | digit
+digit -&gt; [0 - 9]*
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>list -&gt; list , id | id 
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code>list -&gt; id, list | id
+</code></pre>
+<ol start="4">
+<li></li>
+</ol>
+<pre><code>expr -&gt;  expr + term | expr - term | term 
+term -&gt; term * unary | term / unary | unary 
+
+unary -&gt; + factor | - factor | factor
+
+factor -&gt; id | num | (expr)
+</code></pre>
+<a class="header" href="#225" id="225"><h2>2.2.5</h2></a>
+<ol>
+<li>$$S_{n} = 2^{n} * 3  |  2^{n} * 9 | 2^{(n + 1)}  * 3 | 2 ^ {n} * 15 $$</li>
+<li>常数都是3的倍数， 所以能够被3整除</li>
+</ol>
+<a class="header" href="#226" id="226"><h2>2.2.6</h2></a>
+<ol>
+<li>罗马数字编码为阿拉伯数字</li>
+</ol>
+<pre><code>I -&gt; 1
+X -&gt; 10
+C -&gt; 100 
+M -&gt; 1000
+V -&gt; 5 
+L -&gt; 50 
+D -&gt; 500 
+</code></pre>
+<ol start="2">
+<li>
+<p>理解文法</p>
+<ol>
+<li>相同的数字连写， 所表示这些数字相加得到的数, <code>II = 2</code></li>
+<li>小的数字在大的数字右边， 所表示的数等于数字相加得到的数 <code>VI = 6</code></li>
+<li>小的数字在大的数字左边， 所表示的数等于大数减小数得到的数， <code>IV = 4</code></li>
+</ol>
+</li>
+<li>
+<p>文法</p>
+<ol>
+<li>smallDigit -&gt; I | II | III | ε</li>
+<li>digit -&gt; smallDigit | I V | V smallDigit | I X</li>
+<li>smallTen -&gt; X | XX | XXX</li>
+<li>ten -&gt; smallTen | X L  | L smallTen | X C</li>
+<li>smallHundred -&gt; C | CC | CCC</li>
+<li>hundred -&gt; smallHundred | C D | D smallHundred | C M</li>
+<li>thousand -&gt; M | MM | MMM | ε</li>
+<li>romanNum -&gt; thousand hundred ten digit</li>
+</ol>
+</li>
+</ol>
+<a class="header" href="#231" id="231"><h2>2.3.1</h2></a>
+<pre><code>expr -&gt; {print(&quot;+&quot;)} expr + term
+      | {print(&quot;-&quot;)} expr - term
+      | term 
+
+term -&gt; print(&quot;*&quot;)  term * factor
+      | print(&quot;/&quot;)  term / factor
+      | factor
+
+factor -&gt; num | (expr)
+</code></pre>
+<a class="header" href="#232" id="232"><h2>2.3.2</h2></a>
+<pre><code>9 5 - 2 *
+
+E -&gt; {print(&quot;(&quot;)} E {print(op)} E {print(&quot;)&quot;}} op | digit {print(digit)}
+</code></pre>
+<a class="header" href="#233" id="233"><h2>2.3.3</h2></a>
+<pre><code>num -&gt; thousand hundred ten digit
+       { num.roman = thousand.roman || hundred.roman || ten.roman || digit.roman;
+         print(num.roman)}
+
+thousand -&gt; low {thousand.roman = repeat('M', low.v)}
+
+hundred -&gt; low {hundred.roman = repeat('C', low.v)}
+         | 4 {hundred.roman = 'CD'}
+         | high {hundred.roman = 'D' || repeat('X', high.v - 5)}
+         | 9 {hundred.roman = 'CM'}
+
+ten -&gt; low {ten.roman = repeat('X', low.v)}
+     | 4 {ten.roman = 'XL'}
+     | high {ten.roman = 'L' || repeat('X', high.v - 5)}
+     | 9 {ten.roman = 'XC'}
+
+digit -&gt; low {digit.roman = repeat('I', low.v)}
+       | 4 {digit.roman = 'IV'}
+       | high {digit.roman = 'V' || repeat('I', high.v - 5)}
+       | 9 {digit.roman = 'IX'}
+
+low -&gt; 0 {low.v = 0}
+     | 1 {low.v = 1}
+     | 2 {low.v = 2}
+     | 3 {low.v = 3}
+
+high -&gt; 5 {high.v = 5}
+      | 6 {high.v = 6}
+      | 7 {high.v = 7}
+      | 8 {high.v = 8}
+    
+
+
+</code></pre>
+<a class="header" href="#234" id="234"><h2>2.3.4</h2></a>
+<pre><code>
+romanNum -&gt; thousand hundred ten digit {romanNum.v = thousand.v || hundred.v || ten.v || digit.v; print(romanNun.v)}
+thousand -&gt; M {thousand.v = 1}
+          | MM {thousand.v = 2}
+          | MMM {thousand.v = 3}
+          | ε {thousand.v = 0}
+hundred -&gt; smallHundred {hundred.v = smallHundred.v}
+         | C D {hundred.v = smallHundred.v}
+         | D smallHundred {hundred.v = 5 + smallHundred.v}
+         | C M {hundred.v = 9}
+smallHundred -&gt; C {smallHundred.v = 1}
+              | CC {smallHundred.v = 2}
+              | CCC {smallHundred.v = 3}
+              | ε {hundred.v = 0}
+ten -&gt; smallTen {ten.v = smallTen.v}
+     | X L  {ten.v = 4}
+     | L smallTen  {ten.v = 5 + smallTen.v}
+     | X C  {ten.v = 9}
+smallTen -&gt; X {smallTen.v = 1}
+          | XX {smallTen.v = 2}
+          | XXX {smallTen.v = 3}
+          | ε {smallTen.v = 0}
+digit -&gt; smallDigit {digit.v = smallDigit.v}
+       | I V  {digit.v = 4}
+       | V smallDigit  {digit.v = 5 + smallDigit.v}
+       | I X  {digit.v = 9}
+ smallDigit -&gt; I {smallDigit.v = 1}
+            | II {smallDigit.v = 2}
+            | III {smallDigit.v = 3}
+            | ε {smallDigit.v = 0}
+</code></pre>
+<a class="header" href="#235" id="235"><h2>2.3.5</h2></a>
+<pre><code>92+3- =&gt; -+923
+
+expr -&gt; {print(op)} expr expr op | digit {print(digit)}
+</code></pre>
+<a class="header" href="#261" id="261"><h2>2.6.1</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code class="language-java">if (peek == '/') {
+      char nextLetter = (char) System.in.read();
+
+      /*
+       1. 判断是否是否以 // 开头
+       2. 如果是的则丢弃这行内容
+      */
+
+      if (nextLetter == '/') {
+        do {
+          nextLetter = (char) System.in.read();
+        } while (nextLetter != '\n');
+
+        peek = ' ';
+      }
+
+      /*
+        1. 判断是否以 /* 开头, 结尾
+        2. 如果是的则丢弃这段内容
+      */
+
+      if (nextLetter == '*') {
+        char nextCharLetter = ' ';
+        do {
+          nextLetter = (char) System.in.read();
+          nextCharLetter = (char) System.in.read();
+        } while (nextLetter != '*' &amp;&amp; nextCharLetter != '/');
+      }
+}
+</code></pre>
+<a class="header" href="#262" id="262"><h2>2.6.2</h2></a>
+<pre><code class="language-java">if (peek == '&lt;' || peek == '=' || peek == '!' || peek == '&gt;') {
+      char nextCharLetter = (char) System.in.read();
+
+      if (nextCharLetter == '=') {
+        peek = ' ';
+        return new Opeartor(Tag.OPERATOR, &quot;&quot; + peek + nextCharLetter);
+      } else {
+        peek = nextCharLetter;
+        return new Opeartor(Tag.OPERATOR, &quot;&quot; + peek);
+      }
+}
+</code></pre>
+<a class="header" href="#263" id="263"><h2>2.6.3</h2></a>
+<pre><code class="language-java">
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapter2/theory.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapter3/theory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapter2/theory.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapter3/theory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

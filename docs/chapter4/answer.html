@@ -1,0 +1,420 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>习题答案 - 龙书笔记</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../chapter2/theory.html"><strong aria-hidden="true">1.</strong> 一个简单的语法制导翻译器</a></li><li><ol class="section"><li><a href="../chapter2/answer.html"><strong aria-hidden="true">1.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter3/theory.html"><strong aria-hidden="true">2.</strong> 词法分析</a></li><li><ol class="section"><li><a href="../chapter3/answer.html"><strong aria-hidden="true">2.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter4/theory.html"><strong aria-hidden="true">3.</strong> 语法分析</a></li><li><ol class="section"><li><a href="../chapter4/answer.html" class="active"><strong aria-hidden="true">3.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter5/theory.html"><strong aria-hidden="true">4.</strong> 语法制导的翻译</a></li><li><ol class="section"><li><a href="../chapter5/answer.html"><strong aria-hidden="true">4.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter6/theory.html"><strong aria-hidden="true">5.</strong> 中间代码生成</a></li><li><ol class="section"><li><a href="../chapter6/answer.html"><strong aria-hidden="true">5.1.</strong> 习题答案</a></li></ol></li><li><a href="../chapter7/theory.html"><strong aria-hidden="true">6.</strong> 运行时刻环境</a></li><li><ol class="section"><li><a href="../chapter7/answer.html"><strong aria-hidden="true">6.1.</strong> 习题答案</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">龙书笔记</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#421" id="421"><h1>4.2.1</h1></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>S = lm =&gt; SS* =&gt; SS+S* =&gt; as+s* =&gt; aa+s* =&gt; aa+a*
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>s = rm =&gt; SS* =&gt; sa* =&gt; ss+a* =&gt; sa+a* =&gt; aa+a*
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<p><img src="./images/4_2_1.png" alt="4_2_1.png" /></p>
+<ol start="4">
+<li>否</li>
+</ol>
+<ol start="5">
+<li>L = {11+}</li>
+</ol>
+<a class="header" href="#422" id="422"><h2>4.2.2</h2></a>
+<ol>
+<li></li>
+</ol>
+<pre><code>S -&gt; 0 S 1 | 0 1  和串000111
+</code></pre>
+<pre><code>S = lm =&gt; 0 S 1  =&gt; 0 0 S 1 1 =&gt; 0 0 0 1 1 1 
+S = rm =&gt; 0 S 1  =&gt; 0 0 S 1 1 =&gt; 0 0 0 1 1 1 
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>S -&gt; + S S | * S S | a 和串 + *aaa
+</code></pre>
+<pre><code>S = lm = + S S = + * S S S = + * a S S  = +*aaa 
+S = rm = + S S = + S a = + * S S a = + * S a a = +*aaa 
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code>S -&gt; S (S) S -&gt; | ℇ 和串(()())
+</code></pre>
+<pre><code>S = lm =&gt; S (S) S =&gt; ℇ (S) S =&gt; ℇ (S (S) S) S =&gt; (S (S) S (S) S) S =&gt; 
+    (ℇ (S) s (S) S) =&gt; ... =&gt; (()())
+
+S = rm =&gt; S (S) S =&gt; S (S) ℇ =&gt; S (S (S) S) =&gt; S (S (S) S (S) S) =&gt; 
+ ... =&gt; (()())
+
+</code></pre>
+<a class="header" href="#423" id="423"><h2>4.2.3</h2></a>
+<ol>
+<li></li>
+</ol>
+<p>所有由0和1组合成的串， 并且每个0后面至少跟着1个1</p>
+<pre><code>S -&gt; (0?1)*
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+<pre><code>S -&gt; 0S0 | 1S1 | 0 | 1 | ε
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+<pre><code>S -&gt; 0S1S | 1S0S | ε
+</code></pre>
+<ol start="4">
+<li></li>
+</ol>
+<pre><code>S -&gt; 01S | 1S0 | 1 | 0
+</code></pre>
+<ol start="5">
+<li></li>
+</ol>
+<p>不包含011</p>
+<pre><code>S -&gt; 1*(0+1?)*
+</code></pre>
+<a class="header" href="#425" id="425"><h2>4.2.5</h2></a>
+<pre><code>stmt -&gt; if expr then stmt [else stmt]
+        | begin stmtlist end 
+
+stmtlist -&gt; stmt [; stmtList]
+</code></pre>
+<a class="header" href="#441" id="441"><h2>4.4.1</h2></a>
+<a class="header" href="#s---0-s-1--0-1" id="s---0-s-1--0-1"><h3>S -&gt; 0 S 1 | 0 1</h3></a>
+<ol>
+<li>
+<p>提取左公因子</p>
+<p>S -&gt; 0A
+A -&gt; S 1 | 1</p>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p>消除左递归</p>
+<p>S -&gt; 0A
+A -&gt; 0 A 1 | 1</p>
+</li>
+<li>
+<p>预测分析表</p>
+</li>
+</ol>
+<table><thead><tr><th>非终结符号</th><th>0</th><th>1</th><th>$</th></tr></thead><tbody>
+<tr><td>S</td><td>S -&gt; 0A</td><td> </td><td> </td></tr>
+<tr><td>A</td><td>A -&gt; 0 A 1</td><td>A -&gt; 1</td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#s----s-s---s-s--a" id="s----s-s---s-s--a"><h3>S -&gt; + S S | * S S | a</h3></a>
+<ol>
+<li>
+<p>无左公因子</p>
+</li>
+<li>
+<p>无左递归</p>
+</li>
+</ol>
+<table><thead><tr><th>非终结符号</th><th>+</th><th>* </th><th>a</th><th>$</th></tr></thead><tbody>
+<tr><td>S</td><td>S -&gt; + S S </td><td> S -&gt; * S S </td><td> S -&gt; a </td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#s---s-s-s--ℇ" id="s---s-s-s--ℇ"><h3>S -&gt; S (S) S | ℇ</h3></a>
+<ol>
+<li>
+<p>无左公因子</p>
+</li>
+<li>
+<p>消除左递归</p>
+</li>
+</ol>
+<pre><code>    S -&gt; A
+
+    A -&gt; (S) S A | ℇ
+</code></pre>
+<ol start="3">
+<li>预测分析表</li>
+</ol>
+<table><thead><tr><th>非终结符号</th><th>( </th><th> ) </th><th>$</th></tr></thead><tbody>
+<tr><td>S</td><td>S-&gt;A</td><td> S-&gt;A</td><td> S-&gt;A</td></tr>
+<tr><td>A</td><td>A -&gt; (S) S A <br> A -&gt; ℇ </td><td>A -&gt; ℇ</td><td> A -&gt; ℇ</td></tr>
+</tbody></table>
+<a class="header" href="#s---s--s--s-s---s---s--a" id="s---s--s--s-s---s---s--a"><h3>S -&gt; S + S | S S | ( S ) | S* | a</h3></a>
+<ol>
+<li>提取左公因子</li>
+</ol>
+<pre><code>    S -&gt; SA | (S) | a
+    A -&gt; +S |  S  |  * 
+
+=&gt;
+    S -&gt; SA |  T 
+    A -&gt; +S |  S  |  * 
+    T -&gt; (S) | a 
+
+</code></pre>
+<ol start="2">
+<li>消除左递归</li>
+</ol>
+<pre><code>
+i = 1
+    S -&gt; TB
+    B -&gt; AB | ε
+
+i = 2
+ j = 1 
+    A -&gt; + S | TB | * 
+
+i = 3
+ j = 1 
+    无需处理
+ j = 2
+    无需处理
+
+最终得到的产生式：
+    S -&gt; TB
+    B -&gt; AB | ε
+    A -&gt; + S | TB | *
+    T -&gt; (S) | a
+</code></pre>
+<ol start="3">
+<li>预测表</li>
+</ol>
+<pre><code>FIRST(S) = FIRST(T) = { (, a }
+
+FIRST(B) = {FIRST(A), ε}  = { + , (, a, *, ε }
+
+FIRST(A) = {+ , first(T), *} = {+, (, a, *}
+
+FIRST(T) = { (, a }
+
+
+FOLLOW(T) = {$ FIRST(B)} = {$ , + , (, a, *}
+
+FOLLOW(A) = {$ | FIRST(B) | FOLLOW(S)} = {$ , + , (,  a, *, )}
+
+FOLLOW(B) = {$}
+
+FOLLOW(S) = {FOLLOW(A) =  {$ , + , (,  a, *, )}
+</code></pre>
+<p>(A-&gt;TB 存在ε)</p>
+<table><thead><tr><th>非终结符号</th><th> + </th><th> * </th><th> ( </th><th> ) </th><th> a </th><th> $ </th></tr></thead><tbody>
+<tr><td>S</td><td>  </td><td> </td><td> S-&gt;TB </td><td> </td><td> S-&gt;TB</td><td> </td></tr>
+<tr><td>B</td><td> B-&gt;AB </td><td> B-&gt;AB</td><td> B-&gt;AB </td><td> </td><td> B-&gt;AB</td><td> B-&gt;ε</td></tr>
+<tr><td>A</td><td> A-&gt;+S </td><td> A-&gt;*</td><td> A-&gt;TB</td><td> </td><td> A-&gt;TB</td></tr>
+<tr></tr>
+<tr><td>T</td><td> </td><td> </td><td> T-&gt;(S)</td><td> </td><td> T-&gt; a </td><td> </td></tr>
+</tbody></table>
+<a class="header" href="#442" id="442"><h3>4.4.2</h3></a>
+<a class="header" href="#445" id="445"><h3>4.4.5</h3></a>
+<pre><code>S -&gt; aSa | aa 
+
+=&gt; 
+
+   S -&gt; aB
+   B -&gt; Sa | a 
+   C -&gt; aC | ε
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../chapter4/theory.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../chapter5/theory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../chapter4/theory.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../chapter5/theory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
